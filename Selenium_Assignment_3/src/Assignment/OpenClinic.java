@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.Set;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -38,11 +39,12 @@ public class OpenClinic {
 		String NewTab = Keys.chord(Keys.CONTROL,Keys.RETURN);
 		d.findElement(By.linkText("Medical Records")).sendKeys(NewTab);
 		
+		
 		//switchint handle to next tab
 		Set<String> WindowHandle = d.getWindowHandles();
 		for(String Tab:WindowHandle) {
 			d.switchTo().window(Tab);
-		}
+		}		
 		
 		//click on search patient link
 		d.findElement(By.linkText("Search Patient")).click();
@@ -52,9 +54,16 @@ public class OpenClinic {
 		Select field = new Select(Field);
 		field.selectByVisibleText("First Name");
 		
+		String title1 = d.getTitle();  //title before clicking on serch button
+		
 		//click on search patient button
 		d.findElement(By.id("search_patient")).click();
 		
+		String title2 = d.getTitle();   //title after clicking on serch button
+		
+		Assert.assertTrue(title1!=title2);
+		
+		System.out.println("Title : "+title2);
 		
 		
 	}
